@@ -20,7 +20,7 @@ class ActorManager():
         ]
 
     def delete(self, pk: int):
-        db_cursor = self.conn.execute(
+        self.conn.execute(
             f"DELETE * FROM {self.table_name}"
             f"WHERE id = {pk}"
         )
@@ -28,15 +28,18 @@ class ActorManager():
         self.conn.commit()
 
     def create(self, first_name: str, last_name: str):
-        db_cursor = self.conn.execute(
-            f"INSERT INTO {self.table_name} (first_name, last_name) VALUES (?, ?)"
+        self.conn.execute(
+            f"INSERT INTO {self.table_name} (first_name, last_name) VALUES (?, ?)",
+            (first_name, last_name),
+
         )
 
         self.conn.commit()
 
     def update(self, pk: int, first_name: str, last_name: str):
-        db_cursor = self.conn.execute(
+        self.conn.execute(
             f"UPDATE {self.table_name}"
-            f" SET  = {first_name}"
+            f" SET first_name, last_name = {first_name}, {last_name}"
             f"WHERE id = {pk}"
         )
+        self.conn.commit()
